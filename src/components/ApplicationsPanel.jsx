@@ -1,6 +1,6 @@
 import { ChevronDown, Plus, Sparkles } from 'lucide-react'
 
-function ApplicationsPanel({ applications, error, loading }) {
+function ApplicationsPanel({ applications, error, loading, onAdd }) {
   return (
     <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900/60" id="applications">
       <div className="flex flex-col gap-4 border-b border-slate-800 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -28,7 +28,7 @@ function ApplicationsPanel({ applications, error, loading }) {
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300" aria-hidden="true"><Sparkles size={24} /></div>
         <h3 className="mt-5 text-base font-semibold">No applications yet</h3>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-slate-500">When you add an application, you'll be able to track its status, notes, and next steps from this dashboard.</p>
-              <button className="mt-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300" type="button"><Plus size={16} />Add your first application</button>
+              <button className="mt-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300" onClick={onAdd} type="button"><Plus size={16} />Add your first application</button>
               </>}
       </div>
     </section>

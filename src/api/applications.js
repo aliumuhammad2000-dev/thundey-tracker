@@ -19,3 +19,16 @@ export async function fetchApplications() {
     notes: post.title,
   }))
 }
+
+export async function createApplication(application) {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    body: JSON.stringify(application),
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  })
+
+  if (!response.ok) throw new Error('Unable to save this application right now.')
+
+  const saved = await response.json()
+  return { ...application, id: saved.id }
+}
