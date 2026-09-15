@@ -1,6 +1,6 @@
 import { ChevronDown, Plus, Sparkles } from 'lucide-react'
 
-function ApplicationsPanel() {
+function ApplicationsPanel({ applications, error, loading }) {
   return (
     <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900/60" id="applications">
       <div className="flex flex-col gap-4 border-b border-slate-800 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -18,11 +18,18 @@ function ApplicationsPanel() {
           </div>
         </div>
       </div>
-      <div className="px-5 py-16 text-center sm:py-24">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300" aria-hidden="true"><Sparkles size={24} /></div>
+            <div className="px-5 py-16 text-center sm:py-24">
+              {loading && <p className="text-sm text-cyan-300">Loading applications...</p>}
+              {!loading && error && <p className="text-sm text-rose-300">{error}</p>}
+              {!loading && !error && applications.length > 0 && <div className="grid gap-3 text-left sm:grid-cols-2">
+                {applications.map((application) => <article className="rounded-xl border border-slate-800 bg-slate-950/70 p-4" key={application.id}><div className="flex items-start justify-between gap-3"><div><h3 className="font-medium text-slate-100">{application.role}</h3><p className="mt-1 text-sm text-slate-400">{application.company}</p></div><span className="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-300">{application.status}</span></div><p className="mt-3 truncate text-xs text-slate-600">{application.notes}</p></article>)}
+              </div>}
+              {!loading && !error && applications.length === 0 && <>
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300" aria-hidden="true"><Sparkles size={24} /></div>
         <h3 className="mt-5 text-base font-semibold">No applications yet</h3>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-slate-500">When you add an application, you'll be able to track its status, notes, and next steps from this dashboard.</p>
-        <button className="mt-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300" type="button"><Plus size={16} />Add your first application</button>
+              <button className="mt-6 inline-flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300" type="button"><Plus size={16} />Add your first application</button>
+              </>}
       </div>
     </section>
   )

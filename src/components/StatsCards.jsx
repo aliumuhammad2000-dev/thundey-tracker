@@ -1,10 +1,10 @@
-const stats = [
-  { label: 'Total applications', value: '0', accent: 'text-cyan-300' },
-  { label: 'In progress', value: '0', accent: 'text-amber-300' },
-  { label: 'Offers', value: '0', accent: 'text-emerald-300' },
-]
+function StatsCards({ applications }) {
+  const stats = [
+    { label: 'Total applications', value: applications.length, accent: 'text-cyan-300' },
+    { label: 'In progress', value: applications.filter(({ status }) => ['Applied', 'Interview'].includes(status)).length, accent: 'text-amber-300' },
+    { label: 'Offers', value: applications.filter(({ status }) => status === 'Offer').length, accent: 'text-emerald-300' },
+  ]
 
-function StatsCards() {
   return (
     <div className="mt-8 grid gap-4 md:grid-cols-3">
       {stats.map((stat) => (
