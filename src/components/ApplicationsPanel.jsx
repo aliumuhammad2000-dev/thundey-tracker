@@ -1,6 +1,6 @@
-import { ChevronDown, Plus, Sparkles } from 'lucide-react'
+import { ChevronDown, Plus, Sparkles, Trash2 } from 'lucide-react'
 
-function ApplicationsPanel({ applications, error, loading, onAdd }) {
+function ApplicationsPanel({ applications, deletingId, error, loading, onAdd, onDelete }) {
   return (
     <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900/60" id="applications">
       <div className="flex flex-col gap-4 border-b border-slate-800 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -22,7 +22,7 @@ function ApplicationsPanel({ applications, error, loading, onAdd }) {
               {loading && <p className="text-sm text-cyan-300">Loading applications...</p>}
               {!loading && error && <p className="text-sm text-rose-300">{error}</p>}
               {!loading && !error && applications.length > 0 && <div className="grid gap-3 text-left sm:grid-cols-2">
-                {applications.map((application) => <article className="rounded-xl border border-slate-800 bg-slate-950/70 p-4" key={application.id}><div className="flex items-start justify-between gap-3"><div><h3 className="font-medium text-slate-100">{application.role}</h3><p className="mt-1 text-sm text-slate-400">{application.company}</p></div><span className="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-300">{application.status}</span></div><p className="mt-3 truncate text-xs text-slate-600">{application.notes}</p></article>)}
+                {applications.map((application) => <article className="rounded-xl border border-slate-800 bg-slate-950/70 p-4" key={application.id}><div className="flex items-start justify-between gap-3"><div><h3 className="font-medium text-slate-100">{application.role}</h3><p className="mt-1 text-sm text-slate-400">{application.company}</p></div><span className="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-300">{application.status}</span></div><p className="mt-3 truncate text-xs text-slate-600">{application.notes}</p><button aria-label={`Delete ${application.role} at ${application.company}`} className="mt-4 inline-flex items-center gap-2 text-xs text-slate-500 transition hover:text-rose-300 disabled:cursor-not-allowed disabled:opacity-50" disabled={deletingId === application.id} onClick={() => onDelete(application.id)} type="button"><Trash2 size={14} />{deletingId === application.id ? 'Deleting...' : 'Delete'}</button></article>)}
               </div>}
               {!loading && !error && applications.length === 0 && <>
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300" aria-hidden="true"><Sparkles size={24} /></div>

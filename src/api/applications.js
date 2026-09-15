@@ -32,3 +32,11 @@ export async function createApplication(application) {
   const saved = await response.json()
   return { ...application, id: saved.id }
 }
+
+export async function deleteApplication(id) {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) throw new Error('Unable to delete this application right now.')
+}
