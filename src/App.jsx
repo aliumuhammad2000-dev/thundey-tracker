@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { createApplication, deleteApplication, fetchApplications } from './api/applications'
+import { createApplication, deleteApplication, fetchApplications, updateApplication } from './api/applications'
 import ApplicationForm from './components/ApplicationForm'
 import ApplicationsPanel from './components/ApplicationsPanel'
 import DashboardHeader from './components/DashboardHeader'
@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [editingApplication, setEditingApplication] = useState(null)
   const [saving, setSaving] = useState(false)
   const [deletingId, setDeletingId] = useState(null)
 
@@ -21,12 +22,28 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
-  async function handleCreate(application) {
+  function openCreateForm() {
+    setEditingApplication(null)
+    setShowForm(true)
+  }
+
+  function openEditForm(application) {
+    setEditingApplication(application)
+    setShowForm(true)
+  }
+
+  async function handleSave(application) {
     setSaving(true)
     try {
-      const created = await createApplication(application)
-      setApplications((current) => [created, ...current])
+      if (editingApplication) {
+        const updated = await updateApplication(editingApplication.id, application)
+        setApplications((current) => current.map((item) => item.id === updated.id ? updated : item))
+      } else {
+        const created = await createApplication(application)
+        setApplications((current) => [created, ...current])
+      }
       setShowForm(false)
+      setEditingApplication(null)
     } catch (requestError) {
       setError(requestError.message)
     } finally {
@@ -52,12 +69,12 @@ function App() {
       <div className="mx-auto flex min-h-screen max-w-375 flex-col lg:flex-row">
         <Sidebar />
         <section className="flex-1 px-6 py-8 sm:px-10 lg:px-12">
-          <DashboardHeader onAdd={() => setShowForm(true)} />
+          <DashboardHeader onAdd={openCreateForm} />
           <StatsCards applications={applications} />
-          <ApplicationsPanel applications={applications} deletingId={deletingId} error={error} loading={loading} onAdd={() => setShowForm(true)} onDelete={handleDelete} />
+          <ApplicationsPanel applications={applications} deletingId={deletingId} error={error} loading={loading} onAdd={openCreateForm} onDelete={handleDelete} onEdit={openEditForm} />
         </section>
       </div>
-      {showForm && <ApplicationForm onClose={() => setShowForm(false)} onSubmit={handleCreate} saving={saving} />}
+      {showForm && <ApplicationForm application={editingApplication} onClose={() => { setShowForm(false); setEditingApplication(null) }} onSubmit={handleSave} saving={saving} />}
     </main>
   )
 }
