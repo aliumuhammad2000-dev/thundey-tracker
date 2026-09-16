@@ -1,16 +1,57 @@
-# React + Vite
+# Thundey Track
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Thundey Track is a responsive job application dashboard built to practice modern React development and REST API integration. It gives job seekers one place to review applications, update progress, and keep track of their next steps.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Fetches sample applications from a REST API
+- Add applications with a reusable form
+- Edit and delete application records
+- Search by company or role
+- Filter by application status
+- Loading, error, and empty states
+- Responsive dashboard layout with mobile navigation
+- Accessible controls and Lucide React icons
 
-## React Compiler
+## Built with
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- Vite
+- Tailwind CSS
+- Lucide React
+- JSONPlaceholder REST API
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## REST API practice
+
+The project currently uses [JSONPlaceholder](https://jsonplaceholder.typicode.com/) as a practice API:
+
+- `GET /posts?_limit=6` loads applications
+- `POST /posts` creates an application
+- `PATCH /posts/:id` updates an application
+- `DELETE /posts/:id` deletes an application
+
+JSONPlaceholder simulates write requests, so changes are visible during the current session but are not permanently saved after a refresh.
+
+## Project structure
+
+```text
+src/
+├── api/
+│   └── applications.js       # REST API requests
+├── components/
+│   ├── ApplicationForm.jsx   # Add and edit form
+│   ├── ApplicationsPanel.jsx # Search, filters, and cards
+│   ├── DashboardHeader.jsx
+│   ├── Sidebar.jsx
+│   └── StatsCards.jsx
+├── App.jsx
+├── index.css
+└── main.jsx
+```
+
+## What I’m learning
+
+This project is a practical frontend exercise in component design, React state, controlled forms, asynchronous requests, CRUD operations, responsive layouts, and handling real-world API states.
