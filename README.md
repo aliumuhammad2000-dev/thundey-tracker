@@ -2,6 +2,10 @@
 
 Thundey Track is a responsive job application dashboard built to practice modern React development and REST API integration. It gives job seekers one place to review applications, update progress, and keep track of their next steps.
 
+## Live demo
+
+Try the deployed application at [thundey-tracker.vercel.app](https://thundey-tracker.vercel.app/).
+
 ## Features
 
 - Fetches sample applications from a REST API
