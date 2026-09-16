@@ -1,10 +1,17 @@
 import { Plus } from 'lucide-react'
 
 function DashboardHeader({ onAdd }) {
+  const today = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date())
+
   return (
     <header className="flex flex-col gap-5 border-b border-slate-800 pb-8 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p className="text-sm text-slate-500">Tuesday, September 15, 2026</p>
+        <p className="text-sm text-slate-500">{today}</p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Good morning, Tunde.</h1>
         <p className="mt-2 text-slate-400">Keep your job search moving forward.</p>
       </div>
