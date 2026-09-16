@@ -1,4 +1,5 @@
-import { BriefcaseBusiness, LayoutDashboard, Menu, Settings } from 'lucide-react'
+import { BriefcaseBusiness, LayoutDashboard, Menu, Settings, X } from 'lucide-react'
+import { useState } from 'react'
 
 const navItems = [
   { label: 'Overview', icon: LayoutDashboard, active: true },
@@ -7,6 +8,8 @@ const navItems = [
 ]
 
 function Sidebar() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <aside className="border-b border-slate-800 bg-slate-900/60 px-6 py-6 lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r">
       <div className="flex items-center justify-between lg:block">
@@ -14,11 +17,11 @@ function Sidebar() {
           <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan-400">Thundey</p>
           <p className="mt-1 text-xs text-slate-500">Track your next move</p>
         </div>
-        <button aria-label="Open menu" className="rounded-lg border border-slate-700 p-2 text-slate-300 lg:hidden" type="button"><Menu size={18} /></button>
+        <button aria-expanded={menuOpen} aria-label={menuOpen ? 'Close menu' : 'Open menu'} className="rounded-lg border border-slate-700 p-2 text-slate-300 lg:hidden" onClick={() => setMenuOpen((open) => !open)} type="button">{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
       </div>
-      <nav className="mt-10 hidden space-y-2 lg:block" aria-label="Main navigation">
+      <nav className={`${menuOpen ? 'block' : 'hidden'} mt-6 space-y-2 lg:mt-10 lg:block`} aria-label="Main navigation">
         {navItems.map(({ label, icon: Icon, active }) => (
-          <a className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${active ? 'bg-cyan-400/10 font-medium text-cyan-300' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'}`} href={`#${label.toLowerCase()}`} key={label}>
+          <a className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${active ? 'bg-cyan-400/10 font-medium text-cyan-300' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'}`} href={`#${label.toLowerCase()}`} key={label} onClick={() => setMenuOpen(false)}>
             <Icon aria-hidden="true" size={18} />{label}
           </a>
         ))}
